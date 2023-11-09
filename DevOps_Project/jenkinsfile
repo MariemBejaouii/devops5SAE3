@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     sh 'rm -rf *'
-                    sh 'git clone https://github.com/MariemBejaouii/devops_application.git devops_application'
+                    sh 'git clone https://github.com/MariemBejaouii/devops_application.git devops5SAE3/DevOps_Project'
                 }
             }
         }
@@ -22,8 +22,7 @@ pipeline {
         stage('Clean the Project') {
             steps {
                 script {
-                    // Nettoyer le projet avec Maven
-                    dir('devops_application/DevOps_Project') {
+                    dir('devops5SAE3/DevOps_Project') {
                         sh 'mvn clean'
                     }
                 }
@@ -33,25 +32,8 @@ pipeline {
         stage('Build with Maven') {
             steps {
                 script {
-                    // Construire le projet avec Maven
-                    dir('devops_application/DevOps_Project') {
+                    dir('devops5SAE3/DevOps_Project') {
                         sh 'mvn clean install'
-                    }
-                }
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Ajouter l'utilisateur Jenkins au groupe docker
-                    sh 'sudo usermod -aG docker jenkins'
-                    sleep 30
-
-                    // Construire l'image Docker à partir du Dockerfile
-                    dir('devops_application/DevOps_Project') {
-                        sh 'mvn clean install'
-                        sh 'sudo -E docker build -t mariembejaoui/devops_project -f Dockerfile .'
                     }
                 }
             }
@@ -65,9 +47,21 @@ pipeline {
             }
         }
 
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh 'sudo usermod -aG docker jenkins'
+                    sleep 30
+                    dir('devops5SAE3/DevOps_Project') {
+                        sh 'mvn clean install'
+                        sh 'sudo -E docker build -t mariembejaoui/devops_project -f Dockerfile .'
+                    }
+                }
+            }
+        }
+
         stage('SonarQube analysis') {
             steps {
-                // Analyse du code avec SonarQube
                 withSonarQubeEnv('sonarqube-10.2.1') {
                     sh 'mvn sonar:sonar'
                 }
