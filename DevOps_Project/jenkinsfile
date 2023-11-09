@@ -52,12 +52,13 @@ pipeline {
         stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
-                    //pom = readMavenPom file: "pom.xml"
-                    pom = readMavenPom file: "${WORKSPACE}/devops5SAE3/DevOps_Project/pom.xml"
+                    def pomContent = readFile("${WORKSPACE}/devops5SAE3/DevOps_Project/pom.xml").trim()
+                    def pom = new XmlSlurper().parseText(pomContent)
+
                     filesByGlob = findFiles(glob: "target/*.${pom.packaging}")
-                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
                     artifactPath = filesByGlob[0].path
                     artifactExists = fileExists artifactPath
+
                     if (artifactExists) {
                         echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version} ARTVERSION"
                         nexusArtifactUploader(
@@ -95,34 +96,5 @@ pipeline {
                 }
             }
         }
-
-        /*
-        stage('SonarQube analysis') {
-            steps {
-                script {
-                    // Ajout du bloc script ici
-                    // Commentez ou décommentez cette partie selon vos besoins
-                    // avecSonarQubeEnv('sonarqube-10.2.1') {
-                    //     sh 'mvn sonar:sonar'
-                    // }
-                }
-            }
-        }
-        */
-
-        /*
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // sh 'sudo usermod -aG docker jenkins'
-                    // sleep 30
-                    // dir('devops5SAE3/DevOps_Project') {
-                    //     sh 'mvn clean install'
-                    //     sh 'sudo -E docker build -t mariembejaoui/devops_project -f Dockerfile .'
-                    // }
-                }
-            }
-        }
-        */
     }
 }
