@@ -101,7 +101,7 @@ pipeline {
             }*/
         }
 
-        stage('Build Docker Image') {
+       /* stage('Build Docker Image') {
             /*steps {
                 script {
                     sh 'sudo usermod -aG docker jenkins'
@@ -111,7 +111,7 @@ pipeline {
                         sh 'sudo -E docker build -t mariembejaoui/devops_project -f Dockerfile .'
                     }
                 }
-            }*/
-        }
+            }
+        }*/
     }
 }
