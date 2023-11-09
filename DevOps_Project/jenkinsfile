@@ -15,7 +15,7 @@ pipeline {
         stage('Checkout from Git') {
             steps {
                 script {
-                    git branch: 'main', url: 'https://github.com/MariemBejaouii/devops_application.git'
+                    git branch: 'main', url: 'https://github.com/MariemBejaouii/devops5SAE3.git'
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     sh 'rm -rf *'
-                    sh 'git clone https://github.com/MariemBejaouii/devops_application.git devops5SAE3/DevOps_Project'
+                    sh 'git clone https://github.com/MariemBejaouii/devops5SAE3.git'
                 }
             }
         }
