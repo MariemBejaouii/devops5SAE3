@@ -95,6 +95,7 @@ pipeline {
 
         stage('SonarQube analysis') {
             steps {
+                // Ajout du bloc script ici
                 script {
                     // Commentez ou décommentez cette partie selon vos besoins
                     // avecSonarQubeEnv('sonarqube-10.2.1') {
