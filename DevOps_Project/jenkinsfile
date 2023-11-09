@@ -93,10 +93,11 @@ pipeline {
             }
         }
 
+        /*
         stage('SonarQube analysis') {
             steps {
-                // Ajout du bloc script ici
                 script {
+                    // Ajout du bloc script ici
                     // Commentez ou décommentez cette partie selon vos besoins
                     // avecSonarQubeEnv('sonarqube-10.2.1') {
                     //     sh 'mvn sonar:sonar'
@@ -104,18 +105,21 @@ pipeline {
                 }
             }
         }
+        */
 
-        // stage('Build Docker Image') {
-        //     steps {
-        //         script {
-        //             sh 'sudo usermod -aG docker jenkins'
-        //             sleep 30
-        //             dir('devops5SAE3/DevOps_Project') {
-        //                 sh 'mvn clean install'
-        //                 sh 'sudo -E docker build -t mariembejaoui/devops_project -f Dockerfile .'
-        //             }
-        //         }
-        //     }
-        // }
+        /*
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // sh 'sudo usermod -aG docker jenkins'
+                    // sleep 30
+                    // dir('devops5SAE3/DevOps_Project') {
+                    //     sh 'mvn clean install'
+                    //     sh 'sudo -E docker build -t mariembejaoui/devops_project -f Dockerfile .'
+                    // }
+                }
+            }
+        }
+        */
     }
 }
