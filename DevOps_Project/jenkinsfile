@@ -49,14 +49,6 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                script {
-                    sh 'mvn test'
-                }
-            }
-        }
-
         stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
@@ -89,6 +81,16 @@ pipeline {
                     } else {
                         error "*** File: ${artifactPath}, could not be found"
                     }
+                }
+            }
+        }
+
+        stage('Run junit and mockito test') {
+            steps {
+                script {
+                    sh 'pwd'
+                    sh 'ls'
+                    sh 'mvn test'
                 }
             }
         }
